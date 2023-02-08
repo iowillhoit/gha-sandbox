@@ -11,13 +11,13 @@ jobs:
   start-log:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "first job"
+      - run: echo "First job"
 
   optional-step:
     runs-on: ubuntu-latest
     if: inputs.foo
     steps:
-      - run: echo "optional step"
+      - run: echo "Optional step"
 
   # We want this step to run if `optional-step` was successful or skipped
   # We _do not_ want this step if `optional-step` failed
@@ -26,4 +26,4 @@ jobs:
     if: always() && (needs.optional-step.result == 'success' || needs.optional-step.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
-      - run: echo "should not echo"
+      - run: echo "Optional step passed or was skipped!"

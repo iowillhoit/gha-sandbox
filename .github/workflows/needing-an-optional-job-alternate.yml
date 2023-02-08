@@ -1,0 +1,49 @@
+name: needing-an-optional-job-alternative
+
+on:
+  workflow_dispatch:
+    inputs:
+      foo:
+        type: boolean
+        description: Run optional step
+
+jobs:
+  start-log:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "first job"
+
+  optional-step:
+    runs-on: ubuntu-latest
+    if: inputs.foo
+    steps:
+      - run: echo "optional step"
+
+  # This is an alternate approach for "needing" an optional step.
+  # Rather than adding the following to every future step:
+  #   if: always() && (needs.optional-step.result == 'success' || needs.optional-step.result == 'skipped')
+  # we perform the validation here and future steps only need to add this step their `needs` array
+  proceed:
+    runs-on: ubuntu-latest
+    needs: [optional-step]
+    if: always()
+    steps:
+      - run: |
+          RESULT=${{ needs.optional-step.result }}
+          if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
+            exit 1
+          fi
+
+  # We want this step to run if `optional-step` was successful or skipped
+  # We _do not_ want this step if `optional-step` failed
+  depends-on-optional:
+    needs: [proceed]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Optional step passed or was skipped!"
+
+  also-depends-on-optional:
+    needs: [proceed]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Optional step passed or was skipped!"
