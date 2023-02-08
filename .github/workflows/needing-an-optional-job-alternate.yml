@@ -32,6 +32,8 @@ jobs:
           RESULT=${{ needs.optional-step.result }}
           if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
             exit 1
+          else
+            echo "continue"
           fi
 
   # We want this step to run if `optional-step` was successful or skipped
