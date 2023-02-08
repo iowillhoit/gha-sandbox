@@ -1,4 +1,4 @@
-name: add-needs-to-skip-all-following-steps
+name: use-needs-to-skip-all-following-steps
 
 on:
   workflow_dispatch:
