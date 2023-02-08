@@ -1,0 +1,29 @@
+name: needing-an-optional-job
+
+on:
+  workflow_dispatch:
+    inputs:
+      foo:
+        type: boolean
+        description: Run optional step
+
+jobs:
+  start-log:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "first job"
+
+  optional-step:
+    runs-on: ubuntu-latest
+    if: input
+    steps:
+      - run: echo "optional step"
+
+  # We want this step to run if `optional-step` was successful or skipped
+  # We _do not_ want this step if `optional-step` failed
+  depends-on-optional:
+    needs: [optional-step]
+    if: always() && (needs.optional-step.result == 'success' || needs.optional-step.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "should not echo"
