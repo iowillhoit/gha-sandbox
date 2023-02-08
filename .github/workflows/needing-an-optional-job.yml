@@ -15,7 +15,7 @@ jobs:
 
   optional-step:
     runs-on: ubuntu-latest
-    if: input
+    if: inputs.foo
     steps:
       - run: echo "optional step"
 
