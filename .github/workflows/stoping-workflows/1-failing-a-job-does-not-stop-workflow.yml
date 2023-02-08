@@ -1,4 +1,4 @@
-name: exit-early
+name: failing-a-job-does-not-stop-workflow
 
 on:
   workflow_dispatch:

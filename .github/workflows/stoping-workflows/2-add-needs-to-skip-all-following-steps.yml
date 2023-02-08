@@ -1,0 +1,23 @@
+name: add-needs-to-skip-all-following-steps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  start-log:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "first job"
+
+  exit-early:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "attempting to exit with exitcode 1"
+          exit 1
+
+  final-log:
+    needs: [exit-early]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "should not echo"
