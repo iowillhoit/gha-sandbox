@@ -14,6 +14,7 @@ jobs:
       - run: echo "first job"
 
   optional-step:
+    needs: [start-log]
     runs-on: ubuntu-latest
     if: inputs.foo
     steps:
