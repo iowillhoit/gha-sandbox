@@ -50,14 +50,14 @@ jobs:
   # We _do not_ want this job if `optional-job` failed
   depends-on-optional:
     needs: [proceed]
-    if: always()
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - run: echo "Optional job passed or was skipped!"
 
   also-depends-on-optional:
     needs: [proceed]
-    if: always()
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - run: echo "Optional job passed or was skipped!"
