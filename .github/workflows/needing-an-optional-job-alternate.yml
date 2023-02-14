@@ -41,12 +41,14 @@ jobs:
   # We _do not_ want this step if `optional-step` failed
   depends-on-optional:
     needs: [proceed]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - run: echo "Optional step passed or was skipped!"
 
   also-depends-on-optional:
     needs: [proceed]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - run: echo "Optional step passed or was skipped!"
