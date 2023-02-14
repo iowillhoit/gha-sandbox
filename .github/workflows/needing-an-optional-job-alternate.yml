@@ -3,52 +3,61 @@ name: needing-an-optional-job-alternative
 on:
   workflow_dispatch:
     inputs:
-      foo:
+      run-optional:
         type: boolean
-        description: Run optional step
+        description: Run the optional job
+      fail-optional:
+        type: boolean
+        description: Simulate a failure on the optional job (for testing)
 
 jobs:
-  start-log:
+  first-job:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "first job"
+      - run: echo "First job complete!"
 
-  optional-step:
-    needs: [start-log]
+  optional-job:
+    needs: [first-job]
     runs-on: ubuntu-latest
-    if: inputs.foo
+    if: inputs.run-optional
     steps:
-      - run: echo "optional step"
+      - run: |
+          echo "Running optional step"
+          if [[ ${{ inputs.fail-optional }} == "true" ]]; then
+            echo "Optional step failed!"
+            exit 1
+          fi
 
-  # This is an alternate approach for "needing" an optional step.
-  # Rather than adding the following to every future step:
-  #   if: always() && (needs.optional-step.result == 'success' || needs.optional-step.result == 'skipped')
-  # we perform the validation here and future steps only need to add this step their `needs` array
+  # This is an alternate approach for "needing" an optional job.
+  # Rather than adding the following to every future job:
+  #   if: always() && (needs.optional-job.result == 'success' || needs.optional-job.result == 'skipped')
+  # we perform the validation here and future jobs only need to add this job their `needs` array
+  # NOTE: Following jobs will still need to add `if: always()` of they will be skipped. See: https://github.com/actions/runner/issues/2205
   proceed:
     runs-on: ubuntu-latest
-    needs: [optional-step]
+    needs: [optional-job]
     if: always()
     steps:
       - run: |
-          RESULT=${{ needs.optional-step.result }}
+          RESULT=${{ needs.optional-job.result }}
           if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
             exit 1
           else
             echo "continue"
           fi
 
-  # We want this step to run if `optional-step` was successful or skipped
-  # We _do not_ want this step if `optional-step` failed
+  # We want this job to run if `optional-job` was successful or skipped
+  # We _do not_ want this job if `optional-job` failed
   depends-on-optional:
     needs: [proceed]
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Optional step passed or was skipped!"
+      - run: echo "Optional job passed or was skipped!"
 
   also-depends-on-optional:
     needs: [proceed]
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Optional step passed or was skipped!"
+      - run: echo "Optional job passed or was skipped!"
