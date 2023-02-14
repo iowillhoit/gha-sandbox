@@ -32,7 +32,7 @@ jobs:
   # Rather than adding the following to every future job:
   #   if: always() && (needs.optional-job.result == 'success' || needs.optional-job.result == 'skipped')
   # we perform the validation here and future jobs only need to add this job their `needs` array
-  # NOTE: Following jobs will still need to add `if: always()` of they will be skipped. See: https://github.com/actions/runner/issues/2205
+  # NOTE: Following jobs will also need `if: success()` or they will be skipped. See: https://github.com/actions/runner/issues/2205
   proceed:
     runs-on: ubuntu-latest
     needs: [optional-job]
@@ -43,7 +43,7 @@ jobs:
           if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
             exit 1
           else
-            echo "continue"
+            echo "Optional job was successful or was skipped, proceeding."
           fi
 
   # We want this job to run if `optional-job` was successful or skipped
