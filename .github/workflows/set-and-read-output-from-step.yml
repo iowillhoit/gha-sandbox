@@ -1,0 +1,18 @@
+name: set-and-read-output-from-step
+
+on:
+  workflow_dispatch:
+
+jobs:
+  single-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set output
+        id: set-output
+        run: |
+          BAR='bar'
+          echo "foo=$BAR" >> GITHUB_OUTPUT
+
+      - name: Read output
+        run: |
+          echo "Reading output 'foo' from previous step: ${{ steps.set-output.outputs.foo}}"
