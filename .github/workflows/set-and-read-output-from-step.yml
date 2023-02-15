@@ -11,7 +11,7 @@ jobs:
         id: set-output
         run: |
           BAR='bar'
-          echo "foo=$BAR" >> GITHUB_OUTPUT
+          echo "foo=$BAR" >> "$GITHUB_OUTPUT"
 
       - name: Read output
         run: |
