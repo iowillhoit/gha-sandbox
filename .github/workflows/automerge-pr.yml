@@ -1,0 +1,26 @@
+name: automerge-pr
+
+on:
+  pull_request:
+    types: [opened, labeled]
+  check_suite:
+    types: [completed]
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.pull_request.title, 'Automerge PR')
+    steps:
+      - name: automerge
+        uses: "pascalgn/automerge-action@eb68b061739cb9d81564f8e812d0b3c45f0fb09a"
+        env:
+          GITHUB_TOKEN: "${{ secrets.TESTINGAUTOMERGETOKEN }}"
+          MERGE_LABELS: automerge
+          MERGE_COMMIT_MESSAGE: pull-request-title
+          MERGE_FILTER_AUTHOR: iowillhoit
+          MERGE_REQUIRED_APPROVALS: 0
+          MERGE_DELETE_BRANCH: true
+          MERGE_FORKS: false
+          MERGE_ERROR_FAIL: true # exit 1 for this action if merge fails
+          UPDATE_RETRIES: 10
+          UPDATE_RETRY_SLEEP: 120000 # 2 minutes
