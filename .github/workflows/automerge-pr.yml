@@ -15,7 +15,7 @@ jobs:
         uses: "pascalgn/automerge-action@eb68b061739cb9d81564f8e812d0b3c45f0fb09a"
         env:
           GITHUB_TOKEN: "${{ secrets.TESTINGAUTOMERGETOKEN }}"
-          MERGE_LABELS: automerge
+          MERGE_LABELS: ""
           MERGE_COMMIT_MESSAGE: pull-request-title
           MERGE_FILTER_AUTHOR: iowillhoit
           MERGE_REQUIRED_APPROVALS: 0
