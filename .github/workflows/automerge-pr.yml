@@ -1,8 +1,8 @@
 name: automerge-pr
 
 on:
-  pull_request:
-    types: [opened, labeled]
+  # pull_request:
+  #   types: [opened]
   check_suite:
     types: [completed]
 
@@ -15,9 +15,9 @@ jobs:
         uses: "pascalgn/automerge-action@eb68b061739cb9d81564f8e812d0b3c45f0fb09a"
         env:
           GITHUB_TOKEN: "${{ secrets.TESTINGAUTOMERGETOKEN }}"
-          MERGE_LABELS: ""
-          MERGE_COMMIT_MESSAGE: pull-request-title
-          MERGE_FILTER_AUTHOR: iowillhoit
+          MERGE_LABELS: "" # This disables requiring a label. Will trigger from PR subject `if` above
+          MERGE_COMMIT_MESSAGE: pull-request-title # Use the PR title as the commit message
+          MERGE_FILTER_AUTHOR: iowillhoit # Only automerge PRs from this author
           MERGE_REQUIRED_APPROVALS: 0
           MERGE_DELETE_BRANCH: true
           MERGE_FORKS: false
