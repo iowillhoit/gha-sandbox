@@ -13,5 +13,6 @@ jobs:
     steps:
       - name: Echo output
         run: |
-          echo "GITHUB.EVENT.WORKFLOW_RUN: ${{ github.event.workflow_run }}"
-          echo "GITHUB.EVENT: ${{ github.event }}"
+          echo "GITHUB.EVENT.WORKFLOW_RUN: ${{ toJson(github.event.workflow_run) }}"
+          echo "--------------------------------"
+          echo "GITHUB.EVENT: ${{ toJson(github.event) }}"
