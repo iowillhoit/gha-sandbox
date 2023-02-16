@@ -1,0 +1,17 @@
+name: workflow-run-watcher
+
+on:
+  workflow_run:
+    workflows: [workflow-run-trigger]
+    types:
+      - completed
+
+jobs:
+  first-step:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo output
+        run: |
+          echo "GITHUB.EVENT.WORKFLOW_RUN: ${{ github.event.workflow_run }}"
+          echo "GITHUB.EVENT: ${{ github.event }}"

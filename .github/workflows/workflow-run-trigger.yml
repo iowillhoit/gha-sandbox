@@ -1,0 +1,19 @@
+name: workflow-run-trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      data-to-pass:
+        required: true
+        description: Input to pass from this workflow to the "watching" workflow_run
+        type: string
+        default: "default-value"
+
+jobs:
+  first-step:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set output
+        run: |
+          BAR=${{ inputs.data-to-pass }}
+          echo "foo=$BAR" >> "$GITHUB_OUTPUT"
