@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo output
+        # TODO: this is not yet working
         run: |
           echo "GITHUB.EVENT.WORKFLOW_RUN: ${{ toJson(github.event.workflow_run) }}"
           echo "--------------------------------"
