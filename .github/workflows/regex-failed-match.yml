@@ -21,6 +21,12 @@ jobs:
           text: ${{ inputs.foo }}
           # https://regex101.com/r/66VrAs/1
           regex: "as ([a-z-]+)$"
+      - name: Confirm regex match
+        if: ${{ !steps.regex.outputs.group1 }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('No regex match found. Exiting')
       - name: Log match from step
         run: |
           echo "Log from step: ${{ steps.regex.outputs.group1 }}"
