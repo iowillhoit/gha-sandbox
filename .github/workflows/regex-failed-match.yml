@@ -32,7 +32,7 @@ jobs:
           echo "Log from step: ${{ steps.regex.outputs.group1 }}"
 
   second-job:
-    if: needs.attempt.regex.match
+    if: needs.attempt-regex.regex.match
     needs: [attempt-regex]
     runs-on: ubuntu-latest
     steps:
