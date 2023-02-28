@@ -1,0 +1,34 @@
+name: regex-failed-match
+
+on:
+  workflow_dispatch:
+    inputs:
+      foo:
+        type: string
+        required: true
+        description: string to match against
+
+jobs:
+  attempt-regex:
+    runs-on: ubuntu-latest
+    outputs:
+      match: ${{ steps.regex.outputs.group1 }}
+    steps:
+      - name: Regex match
+        id: regex
+        uses: actions-ecosystem/action-regex-match@9e6c4fb3d5e898f505be7a1fb6e7b0a278f6665b
+        with:
+          text: ${{ inputs.foo }}
+          # https://regex101.com/r/66VrAs/1
+          regex: "as ([a-z-]+)$"
+      - name: Log match from step
+        run: |
+          echo "Log from step: ${{ steps.regex.outputs.group1 }}"
+
+  second-job:
+    needs: [attempt-regex]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log match from job
+        run: |
+          echo "Log from job: ${{ needs.attempt-regex.outputs.match }}"
