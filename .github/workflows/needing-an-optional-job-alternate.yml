@@ -16,6 +16,10 @@ jobs:
     steps:
       - run: echo "First job complete!"
 
+  # This is an alternate approach for "needing" an optional job.
+  # Rather than adding the following to every future job:
+  #   if: always() && (needs.optional-job.result == 'success' || needs.optional-job.result == 'skipped')
+  # We add a second step that always() checks the status of the optional-step and exit if it fails
   optional-job:
     needs: [first-job]
     runs-on: ubuntu-latest
@@ -38,31 +42,8 @@ jobs:
             echo "Optional job was successful or was skipped, proceeding."
           fi
 
-  # This is an alternate approach for "needing" an optional job.
-  # Rather than adding the following to every future job:
-  #   if: always() && (needs.optional-job.result == 'success' || needs.optional-job.result == 'skipped')
-  # we perform the validation here and future jobs only need to add this job their `needs` array
-  # NOTE: Following jobs will also need `if: success()` or they will be skipped. See: https://github.com/actions/runner/issues/2205
-  # proceed:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     proceed: ${{ steps.proceed.outputs.proceed }}
-  #   needs: [optional-job]
-  #   if: always()
-  #   steps:
-  #     - name: Check for failure
-  #       id: proceed
-  #       run: |
-  #         RESULT=${{ needs.optional-job.result }}
-  #         if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
-  #           exit 1
-  #         else
-  #           echo "Optional job was successful or was skipped, proceeding."
-  #           echo "proceed=true" >> "$GITHUB_OUTPUT"
-  #         fi
-
-  # We want this job to run if `optional-job` was successful or skipped
-  # We _do not_ want this job if `optional-job` failed
+  # This will run if `optional-job` was successful or skipped
+  # This will _not_ run if `optional-job` failed
   depends-on-optional:
     needs: [optional-job]
     runs-on: ubuntu-latest
