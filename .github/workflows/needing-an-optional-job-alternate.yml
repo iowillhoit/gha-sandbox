@@ -20,9 +20,9 @@ jobs:
     needs: [first-job]
     continue-on-error: true
     runs-on: ubuntu-latest
-    if: inputs.run-optional
     steps:
       - id: run-optional-step
+        if: inputs.run-optional
         run: |
           echo "Running optional step"
           if [[ ${{ inputs.fail-optional }} == "true" ]]; then
@@ -30,6 +30,7 @@ jobs:
             exit 1
           fi
       - id: validate-optional-step
+        if: always()
         run: |
           RESULT=${{ steps.run-optional-step.result }}
           if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
