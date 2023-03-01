@@ -32,7 +32,7 @@ jobs:
       - id: validate-optional-step
         if: always()
         run: |
-          RESULT=${{ steps.run-optional-step.result }}
+          RESULT=${{ steps.run-optional-step.outcome }}
           if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
             exit 1
           else
