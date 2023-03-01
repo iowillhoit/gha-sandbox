@@ -31,7 +31,7 @@ jobs:
           fi
       - id: validate-optional-step
         run: |
-          RESULT=${{ step.run-optional-step.result }}
+          RESULT=${{ steps.run-optional-step.result }}
           if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
             exit 1
           else
