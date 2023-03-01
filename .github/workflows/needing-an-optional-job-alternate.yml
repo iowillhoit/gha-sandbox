@@ -35,29 +35,34 @@ jobs:
   # NOTE: Following jobs will also need `if: success()` or they will be skipped. See: https://github.com/actions/runner/issues/2205
   proceed:
     runs-on: ubuntu-latest
+    outputs:
+      proceed: ${{ steps.proceed.outputs.proceed }}
     needs: [optional-job]
     if: always()
     steps:
-      - run: |
+      - name: Check for failure
+        id: proceed
+        run: |
           RESULT=${{ needs.optional-job.result }}
           if [[ "$RESULT" != 'success' && "$RESULT" != 'skipped' ]]; then
             exit 1
           else
             echo "Optional job was successful or was skipped, proceeding."
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
           fi
 
   # We want this job to run if `optional-job` was successful or skipped
   # We _do not_ want this job if `optional-job` failed
   depends-on-optional:
     needs: [proceed]
-    if: always()
+    if: ${{ needs.proceed.outputs.proceed }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "Optional job passed or was skipped!"
 
   also-depends-on-optional:
     needs: [proceed]
-    if: always()
+    if: ${{ needs.proceed.outputs.proceed }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "Optional job passed or was skipped!"
