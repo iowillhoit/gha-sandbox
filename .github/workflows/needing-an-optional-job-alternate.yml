@@ -18,7 +18,6 @@ jobs:
 
   optional-job:
     needs: [first-job]
-    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       - id: run-optional-step
@@ -66,14 +65,12 @@ jobs:
   # We _do not_ want this job if `optional-job` failed
   depends-on-optional:
     needs: [optional-job]
-    # if: ${{ needs.proceed.outputs.proceed }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "Optional job passed or was skipped!"
 
   also-depends-on-optional:
     needs: [optional-job]
-    # if: ${{ needs.proceed.outputs.proceed }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "Optional job passed or was skipped!"
