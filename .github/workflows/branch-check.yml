@@ -13,8 +13,11 @@ jobs:
           echo "Branch contains 'foo': ${{ contains('refs/heads/foo', github.ref) }}"
           echo "---"
           echo "HEAD Branch is: ${{ github.head_ref }}"
-          echo "Branch contains 'foo': ${{ contains('foo', github.head_ref) }}"
-          echp "---"
+          echo "Branch startsWith 'foo': ${{ startsWith('foo', github.head_ref) }}"
+          echo "---"
+          echo "Event is labeled: ${{ github.event.action == 'labeled' }}"
+          echo "Labeled name: ${{ github.event.label.name }}"
+          echo "Label is bug: ${{ github.event.label.name == 'bug' }}"
           echo "event: ${{ toJson(github.event) }}"
 
           echo "---"
