@@ -13,7 +13,9 @@ jobs:
           echo "Branch contains 'foo': ${{ contains('refs/heads/foo', github.ref) }}"
           echo "---"
           echo "HEAD Branch is: ${{ github.head_ref }}"
-          echo "Branch contains 'foo': ${{ contains('refs/heads/foo', github.head_ref) }}"
+          echo "Branch contains 'foo': ${{ contains('foo/', github.head_ref) }}"
           echp "---"
-          echo "Label matches 'bug': ${{ contains(github.event.pull_request.labels.*.name, 'bug') }}
+          echo "label event: ${{ github.event.label.name }}"
+          echo "labels: ${{ github.event.pull_request.labels }}"
+          echo "Label matches 'bug': ${{ contains(github.event.pull_request.labels.*.name, 'bug')}}
           echo "---"
