@@ -18,6 +18,4 @@ jobs:
           echo "Event is labeled: ${{ github.event.action == 'labeled' }}"
           echo "Labeled name: ${{ github.event.label.name }}"
           echo "Label is bug: ${{ github.event.label.name == 'bug' }}"
-          echo "event: ${{ toJson(github) }}"
-
           echo "---"
