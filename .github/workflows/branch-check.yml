@@ -1,0 +1,13 @@
+name: branch-check
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  check-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Branch is: ${{ github.ref }}"
+          echo "Branch contains 'foo': ${{ contains('refs/heads/foo', github.ref) }}"
