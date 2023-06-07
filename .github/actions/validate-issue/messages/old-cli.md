@@ -1,1 +1,7 @@
-Hello, the version of `THE_CLI` you shared is around THE_AGE weeks old. Please update to the latest version and confirm your are still seeing your issue
+Hello :wave: the version of `USER_CLI` you shared is older than the latest release.
+
+Shared: `USER_VERSION`
+Latest: `LATEST_VERSION`
+
+Please update to the latest version ([docs](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_update_cli.htm)) and confirm your are still seeing your issue.
+Note that you can also check out the `rc` and `nightly` releases too ([docs](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli_rc.htm))!
