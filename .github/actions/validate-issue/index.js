@@ -90,12 +90,12 @@ const semver = require("semver");
     }
 
     function addMoreInfoLabel() {
-      //   return octokit.rest.issues.addLabels({
-      //     owner,
-      //     repo,
-      //     issue_number,
-      //     labels: ["more information needed"],
-      //   });
+      return octokit.rest.issues.addLabels({
+        owner,
+        repo,
+        issue_number,
+        labels: ["more information needed"],
+      });
       return;
     }
 
