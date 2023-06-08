@@ -1,4 +1,4 @@
-Hello :wave: the version of `USER_CLI` you shared is older than the latest release.
+Hello @THE_USER :wave: the version of `USER_CLI` you shared is older than the latest release.
 
 Shared: `USER_VERSION`
 Latest: `LATEST_VERSION`

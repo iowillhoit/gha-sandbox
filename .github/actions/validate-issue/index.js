@@ -19,7 +19,6 @@ const semver = require("semver");
 
     const token = local ? process.env.GH_TOKEN : getInput("repo-token");
 
-    if (token) console.log("Token found");
     // Create a GitHub client
     const octokit = getOctokit(token);
 
@@ -49,7 +48,7 @@ const semver = require("semver");
         const { old, latest } = compareVersions("@salesforce/cli", sfVersion);
 
         if (old) {
-          const oldSf = getFile("./messages/old-cli.md", { USER_CLI: "sf", USER_VERSION: sfVersion, LATEST_VERSION: latest });
+          const oldSf = getFile("./messages/old-cli.md", { THE_USER: issue.user.login, USER_CLI: "sf", USER_VERSION: sfVersion, LATEST_VERSION: latest });
           postComment(oldSf);
           addMoreInfoLabel();
         }
@@ -59,7 +58,7 @@ const semver = require("semver");
         const { old, latest } = compareVersions("sfdx-cli", sfdxVersion);
 
         if (old) {
-          const oldSfdx = getFile("./messages/old-cli.md", { USER_CLI: "sfdx", USER_VERSION: sfdxVersion, LATEST_VERSION: latest });
+          const oldSfdx = getFile("./messages/old-cli.md", { THE_USER: issue.user.login, USER_CLI: "sfdx", USER_VERSION: sfdxVersion, LATEST_VERSION: latest });
           postComment(oldSfdx);
           addMoreInfoLabel();
         }
