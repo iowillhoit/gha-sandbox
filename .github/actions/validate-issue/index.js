@@ -19,6 +19,7 @@ const semver = require("semver");
 
     const token = local ? process.env.GH_TOKEN : getInput("repo-token");
 
+    if (token) console.log("Token found");
     // Create a GitHub client
     const octokit = getOctokit(token);
 
@@ -89,12 +90,13 @@ const semver = require("semver");
     }
 
     function addMoreInfoLabel() {
-      return octokit.rest.issues.addLabels({
-        owner,
-        repo,
-        issue_number,
-        labels: ["more information needed"],
-      });
+      //   return octokit.rest.issues.addLabels({
+      //     owner,
+      //     repo,
+      //     issue_number,
+      //     labels: ["more information needed"],
+      //   });
+      return;
     }
 
     function compareVersions(plugin, installed) {
