@@ -46,7 +46,7 @@ async function run() {
     // Search all bodies and get an array of all versions found (first capture group)
     const sfVersions = bodies.map((body) => [...body.matchAll(sfVersionRegex)].map((match) => match[1])).flat();
     const sfdxVersions = bodies.map((body) => [...body.matchAll(sfdxVersionRegex)].map((match) => match[1])).flat();
-    // If we match pluginVersionRegex anywhere, we assume the user has provided the full --version output
+    // If we match pluginVersionRegex anywhere, we assume the user has provided the full --verbose output
     const pluginVersionsIncluded = bodies.some((body) => body.match(pluginVersionsRegex));
 
     console.log("sfVersions", sfVersions);
@@ -82,14 +82,14 @@ async function run() {
       }
 
       if (valid) {
-        console.log("All information provided is valid");
+        console.log("All information provided is valid!");
         removeLabel("more information needed");
         addLabel("investigating");
-        // This label will prevent the action from running again after versions info has been confirmed
+        // This label will prevent the action from running again after version info has been confirmed
         // Otherwise, this action will continue to trigger after every weekly release as `latest` is bumped
         addLabel("validated");
       } else {
-        console.log("Information provided isn't valid");
+        console.log("Information provided is NOT valid");
         addLabel("more information needed");
         removeLabel("investigating");
       }
