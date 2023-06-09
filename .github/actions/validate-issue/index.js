@@ -17,8 +17,6 @@ async function run() {
       return;
     }
 
-    console.log(issue);
-
     const token = local ? process.env.GH_TOKEN : getInput("repo-token");
 
     // Create a GitHub client
@@ -100,19 +98,19 @@ async function run() {
       return octokit.rest.issues.createComment({ owner, repo, issue_number, body });
     }
 
-    function addLabel(label) {
-      return octokit.rest.issues.addLabels({ owner, repo, issue_number, labels: [label] });
+    async function addLabel(label) {
+      await octokit.rest.issues.addLabels({ owner, repo, issue_number, labels: [label] });
     }
 
-    function removeLabel(label) {
+    async function removeLabel(label) {
       try {
-        const response = octokit.rest.issues.removeLabel({ owner, repo, issue_number, name: label });
+        await octokit.rest.issues.removeLabel({ owner, repo, issue_number, name: label });
       } catch (error) {
         if (error.status === 404) {
           console.log(`Label '${label}' was not set`);
-        } else {
-          throw error;
+          return;
         }
+        throw error;
       }
     }
 
