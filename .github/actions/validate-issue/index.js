@@ -46,35 +46,37 @@ async function run() {
       // FUTURE TODO:
       // - Check for bundled plugins that are user installed (user) or linked (link)
       // - Could do a check to see if the users has a prerelease version installed
-
+      let valid = true;
       if (sfVersion && sfVersion.startsWith("1.")) {
         // TODO: Eventually suggest using sf@v2
         const { old, latest } = compareVersions("@salesforce/cli", sfVersion);
-
         if (old) {
           const oldSf = getFile("./messages/old-cli.md", { THE_USER: issue.user.login, USER_CLI: "sf", USER_VERSION: sfVersion, LATEST_VERSION: latest });
           postComment(oldSf);
-          addLabel("more information needed");
-          removeLabel("investigating");
+          valid = false;
         }
       }
       if (sfdxVersion && sfdxVersion.startsWith("7.")) {
         // TODO: Eventually suggest using sf@v2
         const { old, latest } = compareVersions("sfdx-cli", sfdxVersion);
-
         if (old) {
           const oldSfdx = getFile("./messages/old-cli.md", { THE_USER: issue.user.login, USER_CLI: "sfdx", USER_VERSION: sfdxVersion, LATEST_VERSION: latest });
           postComment(oldSfdx);
-          addLabel("more information needed");
-          removeLabel("investigating");
+          valid = false;
         }
       }
 
-      console.log("All information provided is valid");
-      removeLabel("more information needed");
-      addLabel("investigating");
-      return;
+      if (valid) {
+        console.log("All information provided is valid");
+        removeLabel("more information needed");
+        addLabel("investigating");
+      } else {
+        console.log("Information provided is not valid");
+        addLabel("more information needed");
+        removeLabel("investigating");
+      }
     } else {
+      console.log("Full version information was not provided");
       const message = getFile("./messages/provide-version.md", { THE_USER: issue.user.login });
       postComment(message);
       addLabel("more information needed");
