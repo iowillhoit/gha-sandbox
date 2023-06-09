@@ -3,7 +3,7 @@
   "assignee": null,
   "assignees": [],
   "author_association": "OWNER",
-  "body": "@salesforce/cli/1.60.5 sfdx-cli/7.204.6 darwin-arm64 node-v18.15.0 pluginVersions",
+  "body": "@salesforce/cli/1.81.6 darwin-arm64 node-v18.15.0 pluginVersions",
   "closed_at": null,
   "comments": 0,
   "comments_url": "https://api.github.com/repos/iowillhoit/gha-sandbox/issues/16/comments",
