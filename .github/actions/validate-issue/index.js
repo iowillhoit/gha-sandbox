@@ -17,6 +17,8 @@ const semver = require("semver");
       return;
     }
 
+    console.log(process.versions.node);
+
     const token = local ? process.env.GH_TOKEN : getInput("repo-token");
 
     // Create a GitHub client
