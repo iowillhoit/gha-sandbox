@@ -5,7 +5,7 @@ const { context, getOctokit } = require("@actions/github");
 const execSync = require("child_process").execSync;
 const semver = require("semver");
 
-(async function () {
+async function run() {
   try {
     // Set this env var to true to test locally
     // Example: GHA_VALIDATE_ISSUE_LOCAL=true node .github/actions/validate-issue/index.js
@@ -16,8 +16,6 @@ const semver = require("semver");
       setFailed("github.context.payload.issue does not exist");
       return;
     }
-
-    console.log(process.versions.node);
 
     const token = local ? process.env.GH_TOKEN : getInput("repo-token");
 
@@ -30,7 +28,11 @@ const semver = require("semver");
     const repo = context.repo.repo;
     const issue_number = issue.number;
 
+    console.log("Issue URL:", issue.html_url);
+
     const { body } = issue;
+
+    console.log(body);
 
     const sfVersionRegex = "@salesforce/cli/([0-9]+.[0-9]+.[0-9]+(-[a-zA-Z0-9]+.[0-9]+)?)";
     const sfdxVersionRegex = "sfdx-cli/([0-9]+.[0-9]+.[0-9]+(-[a-zA-Z0-9]+.[0-9]+)?)";
@@ -66,6 +68,8 @@ const semver = require("semver");
         }
       }
 
+      console.log("All information is valid");
+      // Add a label?
       return;
     } else {
       const message = getFile("./messages/provide-version.md", { THE_USER: issue.user.login });
@@ -120,4 +124,6 @@ const semver = require("semver");
   } catch (error) {
     setFailed(error.message);
   }
-})();
+}
+
+run();
