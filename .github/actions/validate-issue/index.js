@@ -54,7 +54,8 @@ async function run() {
         if (old) {
           const oldSf = getFile("./messages/old-cli.md", { THE_USER: issue.user.login, USER_CLI: "sf", USER_VERSION: sfVersion, LATEST_VERSION: latest });
           postComment(oldSf);
-          addMoreInfoLabel();
+          addLabel("more information needed");
+          removeLabel("investigating");
         }
       }
       if (sfdxVersion && sfdxVersion.startsWith("7.")) {
@@ -64,17 +65,20 @@ async function run() {
         if (old) {
           const oldSfdx = getFile("./messages/old-cli.md", { THE_USER: issue.user.login, USER_CLI: "sfdx", USER_VERSION: sfdxVersion, LATEST_VERSION: latest });
           postComment(oldSfdx);
-          addMoreInfoLabel();
+          addLabel("more information needed");
+          removeLabel("investigating");
         }
       }
 
-      console.log("All information is valid");
-      // Add a label?
+      console.log("All information provided is valid");
+      removeLabel("more information needed");
+      addLabel("investigating");
       return;
     } else {
       const message = getFile("./messages/provide-version.md", { THE_USER: issue.user.login });
       postComment(message);
-      addMoreInfoLabel();
+      addLabel("more information needed");
+      removeLabel("investigating");
     }
 
     // ---------
@@ -94,14 +98,12 @@ async function run() {
       return octokit.rest.issues.createComment({ owner, repo, issue_number, body });
     }
 
-    function addMoreInfoLabel() {
-      return octokit.rest.issues.addLabels({
-        owner,
-        repo,
-        issue_number,
-        labels: ["more information needed"],
-      });
-      return;
+    function addLabel(label) {
+      return octokit.rest.issues.addLabels({ owner, repo, issue_number, labels: [label] });
+    }
+
+    function removeLabel(label) {
+      return octokit.rest.issues.removeLabel({ owner, repo, issue_number, name: label });
     }
 
     function compareVersions(plugin, installed) {
