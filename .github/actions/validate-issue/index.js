@@ -95,7 +95,7 @@ async function run() {
       }
     } else {
       console.log("Full version information was not provided");
-      const message = getFile("./messages/provide-version.md", { THE_USER: issue.user.login });
+      const message = getFile("./messages/provide-version.md", { THE_AUTHOR: issue.user.login });
       postComment(message);
       addLabel("more information needed");
       removeLabel("investigating");
