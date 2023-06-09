@@ -17,6 +17,8 @@ async function run() {
       return;
     }
 
+    console.log(issue);
+
     const token = local ? process.env.GH_TOKEN : getInput("repo-token");
 
     // Create a GitHub client
@@ -31,8 +33,6 @@ async function run() {
     console.log("Issue URL:", issue.html_url);
 
     const { body } = issue;
-
-    console.log(body);
 
     const sfVersionRegex = "@salesforce/cli/([0-9]+.[0-9]+.[0-9]+(-[a-zA-Z0-9]+.[0-9]+)?)";
     const sfdxVersionRegex = "sfdx-cli/([0-9]+.[0-9]+.[0-9]+(-[a-zA-Z0-9]+.[0-9]+)?)";
