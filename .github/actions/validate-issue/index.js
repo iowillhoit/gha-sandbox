@@ -105,7 +105,15 @@ async function run() {
     }
 
     function removeLabel(label) {
-      return octokit.rest.issues.removeLabel({ owner, repo, issue_number, name: label });
+      try {
+        const response = octokit.rest.issues.removeLabel({ owner, repo, issue_number, name: label });
+      } catch (error) {
+        if (error.status === 404) {
+          console.log(`Label '${label}' was not set`);
+        } else {
+          throw error;
+        }
+      }
     }
 
     function compareVersions(plugin, installed) {
