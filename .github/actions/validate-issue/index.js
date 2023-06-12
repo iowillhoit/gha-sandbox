@@ -20,9 +20,12 @@ async function run() {
     // Temporary check to prevent this action from running on old issues
     // This will prevent noise on tickets already being investigated
     const creationDate = new Date(issue.created_at);
-    const cutoffDate = new Date("2021-06-14T00:00:00Z");
+    console.log("creationDate", creationDate);
+    const cutoffDate = new Date("2023-06-14T00:00:00Z");
+    console.log("cutoffDate", cutoffDate);
+    console.log("creationDate < cutoffDate", creationDate < cutoffDate);
     if (creationDate < cutoffDate) {
-      console.log("Issue was created before 6/11/2021, skipping");
+      console.log("Issue was created before 6/14/2023, skipping");
       return;
     }
 
