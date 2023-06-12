@@ -17,6 +17,15 @@ async function run() {
       return;
     }
 
+    // Temporary check to prevent this action from running on old issues
+    // This will prevent noise on tickets already being investigated
+    const creationDate = new Date(issue.created_at);
+    const cutoffDate = new Date("2021-06-11T00:00:00Z");
+    if (creationDate < cutoffDate) {
+      console.log("Issue was created before 6/11/2021, skipping");
+      return;
+    }
+
     const token = local ? process.env.GH_TOKEN : getInput("repo-token");
 
     // Create a GitHub client
