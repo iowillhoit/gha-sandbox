@@ -16,13 +16,13 @@ jobs:
         id: docker-full-version
         run: |
           docker pull salesforce/salesforcedx:latest-rc-full
-          VERSION=$(docker run --rm salesforce/salesforcedx:latest-rc-full sf version --json | jq -r '.cliVersion' | cut -d'/' -f 3)
+          VERSION=$(docker run --rm salesforce/salesforcedx:nightly-full sf version --json | jq -r '.cliVersion' | cut -d'/' -f 3)
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
       - name: Get docker-slim CLI version
         id: docker-slim-version
         run: |
           docker pull salesforce/salesforcedx:latest-rc-slim
-          VERSION=$(docker run --rm salesforce/salesforcedx:latest-rc-slim sf version --json | jq -r '.cliVersion' | cut -d'/' -f 3)
+          VERSION=$(docker run --rm salesforce/salesforcedx:nightly-slim sf version --json | jq -r '.cliVersion' | cut -d'/' -f 3)
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
       - name: Compare Docker versions against npm
         run: |
