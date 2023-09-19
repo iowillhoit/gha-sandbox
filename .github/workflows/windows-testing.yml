@@ -1,9 +1,9 @@
-name: just-nut
+name: windows-testing
 on:
   workflow_dispatch:
 
 jobs:
-  just-nut:
+  windows-testing:
     name: salesforcecli/plugin-dev
     runs-on: windows-latest
 
