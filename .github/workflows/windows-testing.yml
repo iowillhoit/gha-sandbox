@@ -17,5 +17,5 @@ jobs:
           node-version: lts/*
       - name: Install JIT plugin
         run: |
-          NPM_NAME=$(cat package.json | jq -r '.name')
+          NPM_NAME=$(jq -r '.name' package.json)
           echo $NPM_NAME
