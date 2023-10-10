@@ -1,6 +1,7 @@
 name: automerge-pr
 
 on:
+  # TODO: ADD A PR CHECK TOMORROW
   # pull_request:
   #   types: [opened]
   check_suite:
@@ -9,6 +10,7 @@ on:
 jobs:
   automerge:
     runs-on: ubuntu-latest
+    # TODO: Add a label, but call it nightly automerge. Then update our cle:release:build script to add that label
     if: startsWith(github.event.pull_request.title, 'Automerge PR')
     steps:
       - name: automerge
