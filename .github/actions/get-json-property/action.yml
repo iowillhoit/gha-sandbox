@@ -29,7 +29,7 @@ runs:
         PROP=$(jq -r '.${{ inputs.prop_path }}' ${{ inputs.path }})
         echo "prop=$PROP" >> "$GITHUB_OUTPUT"
     - name: Exit if prop was not found
-      if: ${{ !steps.jq.outputs.prop }}
+      if: ${{ steps.jq.outputs.prop == 'null' }}
       uses: actions/github-script@v7
       with:
         script: core.setFailed("Property '${{ inputs.prop_path }}' not found in ${{ inputs.path }}")
