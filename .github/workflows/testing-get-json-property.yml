@@ -1,50 +1,41 @@
 name: testing-get-json-property
 on:
   workflow_dispatch:
+    inputs:
+      repo:
+        description: 'Repository to checkout'
+        required: true
+        default: 'salesforcecli/plugin-org'
+      path:
+        description: 'Json file to look up prop (example: package.json)'
+        required: true
+        default: 'package.json'
+      prop_path:
+        description: 'jq query to search (example: version)'
+        required: true
+        default: 'version'
 
 jobs:
   testing-get-json-property:
-    name: salesforcecli/plugin-org
+    name: Testing get-json-property
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: salesforcecli/plugin-org
+          repository: ${{ inputs.repo }}
           path: .
+
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      - name: get json property version
-        id: get-json-property-version
+      - name: Get json property
+        id: get-json-property
         uses: iowillhoit/gha-sandbox/.github/actions/get-json-property@main
         with:
-          path: package.json
-          prop_path: version
-      - name: Echo output version
-        run: |
-          echo "package.json - version:"
-          echo "version: ${{ steps.get-json-property-version.outputs.prop }}"
+          path: ${{ inputs.path }}
+          prop_path: ${{ inputs.prop_path }}
 
-      - name: get json property dev-dependency
-        id: get-json-property-devdep
-        uses: iowillhoit/gha-sandbox/.github/actions/get-json-property@main
-        with:
-          path: package.json
-          prop_path: devDependencies["@salesforce/dev-scripts"]
-      - name: Echo output devdep
-        run: |
-          echo "package.json - devdep:"
-          echo "version: ${{ steps.get-json-property-devdep.outputs.prop }}"
-
-      - name: get json property NOT FOUND
-        id: get-json-property-na
-        uses: iowillhoit/gha-sandbox/.github/actions/get-json-property@main
-        with:
-          path: package.json
-          prop_path: foobar
       - name: Echo output
         run: |
-          echo "package.json - NOT FOUND:"
-          echo "version: ${{ steps.get-json-property-na.outputs.prop }}"
+          echo "Value of '${{ inputs.prop_path }}' in '${{ inputs.path }}' is '${{ steps.get-json-property.outputs.prop }}'"
