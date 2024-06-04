@@ -1,0 +1,26 @@
+name: testing-parse-semver-action
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Semver version: example v1.2.3-beta.4'
+        required: true
+
+jobs:
+  testing-parse-semver-action:
+    name: Testing parse-semver
+    runs-on: ubuntu-latest
+    steps:
+      - name: Parse Semver
+        id: parse-semver
+        uses: iowillhoit/gha-sandbox/.github/actions/parse-semver@main
+        with:
+          version: ${{ inputs.version }}
+
+      - name: Echo output
+        run: |
+          echo "Major: ${{ steps.parse-semver.outputs.major }}"
+          echo "Minor: ${{ steps.parse-semver.outputs.minor }}"
+          echo "Patch: ${{ steps.parse-semver.outputs.patch }}"
+          echo "Prerelease: ${{ steps.parse-semver.outputs.prerelease }}"
+          echo "Full version: ${{ steps.parse-semver.outputs.fullversion }}"
