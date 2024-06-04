@@ -1,0 +1,50 @@
+name: testing-get-json-property
+on:
+  workflow_dispatch:
+
+jobs:
+  testing-get-json-property:
+    name: salesforcecli/plugin-org
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: salesforcecli/plugin-org
+          path: .
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: get json property version
+        id: get-json-property-version
+        uses: ./.github/actions/get-json-property
+        with:
+          path: package.json
+          prop_path: version
+      - name: Echo output version
+        run: |
+          echo "package.json - version:"
+          echo "version: ${{ steps.get-json-property-version.outputs.prop }}"
+
+      - name: get json property dev-dependency
+        id: get-json-property-devdep
+        uses: ./.github/actions/get-json-property
+        with:
+          path: package.json
+          prop_path: devDependencies["@salesforce/dev-scripts"]
+      - name: Echo output devdep
+        run: |
+          echo "package.json - devdep:"
+          echo "version: ${{ steps.get-json-property-devdep.outputs.prop }}"
+
+      - name: get json property NOT FOUND
+        id: get-json-property-na
+        uses: ./.github/actions/get-json-property
+        with:
+          path: package.json
+          prop_path: foobar
+      - name: Echo output
+        run: |
+          echo "package.json - NOT FOUND:"
+          echo "version: ${{ steps.get-json-property-na.outputs.prop }}"
