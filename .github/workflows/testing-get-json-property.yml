@@ -18,7 +18,7 @@ jobs:
 
       - name: get json property version
         id: get-json-property-version
-        uses: ./.github/actions/get-json-property
+        uses: iowillhoit/gha-sandbox/.github/actions/get-json-property@main
         with:
           path: package.json
           prop_path: version
@@ -29,7 +29,7 @@ jobs:
 
       - name: get json property dev-dependency
         id: get-json-property-devdep
-        uses: ./.github/actions/get-json-property
+        uses: iowillhoit/gha-sandbox/.github/actions/get-json-property@main
         with:
           path: package.json
           prop_path: devDependencies["@salesforce/dev-scripts"]
@@ -40,7 +40,7 @@ jobs:
 
       - name: get json property NOT FOUND
         id: get-json-property-na
-        uses: ./.github/actions/get-json-property
+        uses: iowillhoit/gha-sandbox/.github/actions/get-json-property@main
         with:
           path: package.json
           prop_path: foobar
