@@ -3,10 +3,9 @@ name: Parse Semver
 description: Extracts major, minor, patch, prerelease, and full version from a given semver.
 
 inputs:
-  version:
-    description: 'The version to process'
+  input_string:
+    description: 'The semver version to parse'
     required: true
-    default: 'v1.0.0'
 
 outputs:
   major:
