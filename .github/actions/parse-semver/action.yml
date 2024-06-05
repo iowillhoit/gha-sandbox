@@ -35,15 +35,13 @@ runs:
         FULL_VERSION="${{ inputs.version }}"
         VERSION="${FULL_VERSION#v}"
 
-        # Extract major, minor, patch
-        MAJOR=$(echo "$VERSION" | cut -d. -f1)
-        MINOR=$(echo "$VERSION" | cut -d. -f2)
-        PATCH=$(echo "$VERSION" | cut -d. -f3 | cut -d- -f1)
-        PRERELEASE=""
+        # Split version into parts
+        IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
 
-        # Extract the prerelease without the build
-        if [[ "$VERSION" == *"-"* ]]; then
-          PRERELEASE=$(echo "$VERSION" | cut -d- -f2 | cut -d. -f1)
+        # Check if PATCH contains prerelease info and extract it
+        if [[ "$PATCH" == *-* ]]; then
+            PRERELEASE=$(echo "$PATCH" | cut -d- -f2 | cut -d. -f1)
+            PATCH=$(echo "$PATCH" | cut -d- -f1)
         fi
 
         # Set outputs
