@@ -15,7 +15,9 @@ jobs:
       - name: testing exit 1
         shell: bash
         run: |
+          FOO=$(foobarbaz 'hi')
           echo "attempting to exit with exitcode 1"
+          echo $FOO
           exit 1
 
   final-log:
