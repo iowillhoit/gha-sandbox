@@ -12,12 +12,29 @@ jobs:
   exit-early:
     runs-on: ubuntu-latest
     steps:
+      - name: setup node
+        uses: actions/setup-node@v4
+      - name: install change-case-management
+        run: npm install -g @salesforce/change-case-management --omit=dev
       - name: testing exit 1
         shell: bash
         run: |
-          FOO=$(foobarbaz 'hi')
+          CTC_RESULT=$(sfchangecase create --location git://github.com/salesforcecli/testPackageRelease.git --release salesforcecli/testPackageRelease.$(date +%F) --json)
+
+          echo $CTC_RESULT
+
+          # STATUS=$(printf '%s' "$CTC_RESULT" | jq -r '.status')
+          # CTC_ID=$(printf '%s' "$CTC_RESULT" | jq -r '.result.id')
+
+          # if [[ "$STATUS" == "0" && "$CTC_ID" != "null" ]]; then
+          #     echo "Successfully created case with ID: $CTC_ID"
+          #     echo "ctcId=$CTC_ID" >> "$GITHUB_OUTPUT"
+          # else
+          #     echo "CTC failed to open a case. Result:"
+          #     echo "$CTC_RESULT"
+          #     exit 1
+          # fi
           echo "attempting to exit with exitcode 1"
-          echo $FOO
           exit 1
 
   final-log:
