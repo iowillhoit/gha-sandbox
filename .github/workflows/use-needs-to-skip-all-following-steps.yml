@@ -20,7 +20,7 @@ jobs:
         shell: bash
         run: |
           echo "before command"
-          CTC_RESULT=$(sfchangecase create --location git://github.com/salesforcecli/testPackageRelease.git --release salesforcecli/testPackageRelease.$(date +%F) --json)
+          CTC_RESULT=$(sfchangecase create --location git://github.com/salesforcecli/testPackageRelease.git --release salesforcecli/testPackageRelease.$(date +%F) --json 2>&1)
           echo "before echo"
           echo $CTC_RESULT
           echo "after echo"
