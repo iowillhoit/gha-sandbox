@@ -35,7 +35,7 @@ jobs:
           #     exit 1
           # fi
           echo "attempting to exit with exitcode 1"
-          exit 1
+          # exit 1
 
   final-log:
     needs: [exit-early]
