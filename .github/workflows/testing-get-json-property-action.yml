@@ -34,7 +34,7 @@ jobs:
         uses: iowillhoit/gha-sandbox/.github/actions/get-json-property@main
         with:
           path: ${{ inputs.path }}
-          prop_path: "devDependencies['@salesforce/dev-scripts']"
+          prop_path: 'devDependencies["@salesforce/dev-scripts"]'
 
       - name: Echo output
         run: |
