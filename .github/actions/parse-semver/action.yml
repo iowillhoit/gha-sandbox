@@ -31,7 +31,7 @@ runs:
       id: parse
       shell: bash
       run: |
-        FULL_VERSION="${{ inputs.version }}"
+        FULL_VERSION="${{ inputs.input_string }}"
         VERSION="${FULL_VERSION#v}"
 
         # Filter out non-semver characters
