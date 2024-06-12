@@ -6,6 +6,9 @@ function parse () {
     local FULL_VERSION=$1
     VERSION="${FULL_VERSION#v}"
 
+    # Filter out non-semver characters
+    VERSION=$(echo "$VERSION" | sed -E 's/[^0-9a-zA-Z.-]+//g')
+
     # Split version into parts
     IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
 
