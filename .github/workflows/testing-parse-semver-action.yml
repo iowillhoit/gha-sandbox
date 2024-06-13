@@ -15,7 +15,7 @@ jobs:
         id: parse-semver
         uses: iowillhoit/gha-sandbox/.github/actions/parse-semver@main
         with:
-          version: ${{ inputs.version }}
+          input_string: ${{ inputs.version }}
 
       - name: Echo output
         run: |
