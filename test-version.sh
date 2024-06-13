@@ -7,7 +7,12 @@ function parse () {
     VERSION="${FULL_VERSION#v}"
 
     # Filter out non-semver characters
-    VERSION=$(echo "$VERSION" | sed -E 's/[^0-9a-zA-Z.-]+//g')
+    CLEAN_VERSION=$(echo "$VERSION" | sed -E 's/[^0-9a-zA-Z.-]+//g')
+
+    if [[ "$CLEAN_VERSION" != "$VERSION" ]]; then
+        echo "Semver version includes invalid characters. Exiting..."
+        exit 1
+    fi
 
     # Split version into parts
     IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
@@ -34,4 +39,5 @@ parse "v3.2"
 parse "v4"
 parse "v5.2.3-beta"
 parse "v6.2.3-beta.4+build.5"
+
 
