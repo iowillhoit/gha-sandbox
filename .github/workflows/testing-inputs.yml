@@ -11,6 +11,13 @@ jobs:
     name: Testing inputs
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+      - name: printf output
+        run: |
+          printf "Value %s from inputs.string" ${{ inputs.string }}
       - name: Echo output
         run: |
           echo 'Value ${{ inputs.string }} from inputs.string'
