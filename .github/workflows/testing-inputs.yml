@@ -13,4 +13,4 @@ jobs:
     steps:
       - name: Echo output with double quotes
         run: |
-          echo "Value of ${{ inputs.string }}"
+          echo "Value ${{ inputs.string }} from inputs.string"
