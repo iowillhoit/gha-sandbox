@@ -11,6 +11,6 @@ jobs:
     name: Testing inputs
     runs-on: ubuntu-latest
     steps:
-      - name: Echo output with double quotes
+      - name: Echo output
         run: |
-          echo "Value ${{ inputs.string }} from inputs.string"
+          echo 'Value ${{ inputs.string }} from inputs.string'
