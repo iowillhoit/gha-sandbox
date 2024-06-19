@@ -9,19 +9,19 @@ inputs:
 
 outputs:
   major:
-    description: 'MAJOR part of the semver'
+    description: 'MAJOR of the version'
     value: ${{ steps.parse.outputs.major }}
   minor:
-    description: 'MINOR part of the semver'
+    description: 'MINOR of the version'
     value: ${{ steps.parse.outputs.minor }}
   patch:
-    description: 'PATCH part of the semver'
+    description: 'PATCH of the version'
     value: ${{ steps.parse.outputs.patch }}
   prerelease:
-    description: 'Prerelease part of the semver'
+    description: 'Prerelease of the version'
     value: ${{ steps.parse.outputs.prerelease }}
   fullversion:
-    description: 'Full representation of the semver'
+    description: 'Full semver value'
     value: ${{ steps.parse.outputs.fullversion }}
 
 runs:

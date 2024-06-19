@@ -1,0 +1,16 @@
+name: testing-inputs
+on:
+  workflow_dispatch:
+    inputs:
+      string:
+        description: 'String input'
+        required: true
+
+jobs:
+  testing-inputs:
+    name: Testing inputs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo output with double quotes
+        run: |
+          echo "Value of ${{ inputs.string }}"
