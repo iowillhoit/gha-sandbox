@@ -17,7 +17,8 @@ jobs:
           repository: ${{ github.repository }}
       - name: printf output
         run: |
-          printf "Value %s from inputs.string" ${{ inputs.string }}
-      - name: Echo output
-        run: |
-          echo 'Value ${{ inputs.string }} from inputs.string'
+          FOO="${{ inputs.string }}"
+          printf "Value %s from inputs.string" $FOO
+    #   - name: Echo output
+    #     run: |
+    #       echo 'Value ${{ inputs.string }} from inputs.string'
