@@ -39,4 +39,4 @@ jobs:
       - name: Echo output
         if: always()
         run: |
-          echo "Value of '${{ inputs.prop_path }}' in '${{ inputs.path }}' is '${{ steps.get-json-property.outputs.prop }}'"
+          echo "Value of ${{ inputs.prop_path }} in ${{ inputs.path }} is ${{ steps.get-json-property.outputs.prop }}"
